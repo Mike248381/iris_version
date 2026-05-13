@@ -1,3 +1,4 @@
+import pandas as pd
 import os
 from datetime import datetime
 import numpy as np
@@ -7,7 +8,7 @@ from tensorflow.keras.models import load_model
 from sklearn.datasets import load_iris
 from tensorflow.keras.utils import to_categorical
 
-def retrain_and_archive_model():
+def retrain_and_archive_model(data_path):
     
     ## Archive current model
     original_name = 'final_iris_model.keras'
@@ -20,8 +21,10 @@ def retrain_and_archive_model():
         raise FileNotFoundError(f"Original model {original_name} not found")
     
     ## Load new dataset for retraining
-    data = load_iris()
-    X_train, y_train = data.data, data.target
+    df = pd.read_csv(data_path)
+    X_train, y_train = df.drop('target', axis=1).values, df['target'].values
+    # data = load_iris()
+    # X_train, y_train = data.data, data.target
     
     ## Load model, retrain, and save with original name
     scaler = joblib.load("iris_scaler.pkl")
@@ -35,4 +38,4 @@ def retrain_and_archive_model():
     return
 
 if __name__ == "__main__":
-    retrain_and_archive_model()
+    retrain_and_archive_model('./data/iris.csv')
