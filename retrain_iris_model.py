@@ -9,7 +9,8 @@ from tensorflow.keras.models import load_model
 from sklearn.datasets import load_iris
 from tensorflow.keras.utils import to_categorical
 
-def retrain_and_archive_model(data_path):
+# def retrain_and_archive_model(data_path):
+def retrain_and_archive_model():
     
     ## Archive current model
     original_name = 'final_iris_model.keras'
@@ -22,12 +23,12 @@ def retrain_and_archive_model(data_path):
         raise FileNotFoundError(f"Original model {original_name} not found")
     
     ## Load new dataset for retraining
-    path_argument = data_path
-    absolute_path = Path(__file__).resolve().parent / path_argument
-    df = pd.read_csv(absolute_path)
-    X_train, y_train = df.drop('target', axis=1).values, df['target'].values
-    # data = load_iris()
-    # X_train, y_train = data.data, data.target
+    # path_argument = data_path
+    # absolute_path = Path(__file__).resolve().parent / path_argument
+    # df = pd.read_csv(absolute_path)
+    # X_train, y_train = df.drop('target', axis=1).values, df['target'].values
+    data = load_iris()
+    X_train, y_train = data.data, data.target
     
     ## Load model, retrain, and save with original name
     scaler = joblib.load("iris_scaler.pkl")
@@ -41,4 +42,5 @@ def retrain_and_archive_model(data_path):
     return
 
 if __name__ == "__main__":
-    retrain_and_archive_model('data/iris.csv')
+    # retrain_and_archive_model('data/iris.csv')
+    retrain_and_archive_model()
