@@ -38,4 +38,4 @@ def retrain_and_archive_model(data_path):
     return
 
 if __name__ == "__main__":
-    retrain_and_archive_model('./data/iris.csv')
+    retrain_and_archive_model('data/iris.csv')
